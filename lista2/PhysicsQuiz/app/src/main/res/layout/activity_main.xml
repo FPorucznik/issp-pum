@@ -16,17 +16,70 @@
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:gravity="center"
-        android:layout_marginBottom="30sp"
+        android:layout_marginBottom="20sp"
         android:text="@string/question1"
         >
     </TextView>
+    <TextView
+        android:id="@+id/correctText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:text="test"
+        android:layout_marginBottom="20sp"
+        android:visibility="gone"
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/incorrectText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginBottom="20sp"
+        android:visibility="gone"
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/cheatedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginBottom="20sp"
+        android:visibility="gone"
+        >
+    </TextView>
+    <TextView
+        android:id="@+id/scoreText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginBottom="20sp"
+        android:visibility="gone"
+        >
+    </TextView>
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/reset"
+        android:layout_marginHorizontal="5sp"
+        android:visibility="gone"
+        android:onClick="resetQuiz"
+        >
+    </Button>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginBottom="30sp"
+        android:layout_marginBottom="5sp"
         >
 
         <Button
@@ -36,6 +89,7 @@
             android:gravity="center"
             android:text="@string/trueBtnString"
             android:layout_marginHorizontal="5sp"
+            android:onClick="questionAnswer"
             >
         </Button>
         <Button
@@ -45,6 +99,7 @@
             android:gravity="center"
             android:text="@string/falseBtnString"
             android:layout_marginHorizontal="5sp"
+            android:onClick="questionAnswer"
             >
         </Button>
     </LinearLayout>
@@ -93,6 +148,7 @@
             android:gravity="center"
             android:text="@string/cheat"
             android:layout_marginHorizontal="5sp"
+            android:onClick="showCheatActivity"
             >
         </Button>
     </LinearLayout>
@@ -105,13 +161,14 @@
         >
 
         <Button
-            android:id="@+id/btnShowCorrectAnswer"
+            android:id="@+id/btnShow"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/show_correct_answer"
             android:layout_marginHorizontal="5sp"
             android:visibility="invisible"
+            android:onClick="showCorrectAnswer"
             >
         </Button>
     </LinearLayout>
