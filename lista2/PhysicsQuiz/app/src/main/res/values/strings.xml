@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">PhysicsQuiz</string>
+
+    <string name="question1">Friction is a force that opposes motion</string>
+    <string name="question2">Mass and weight are the same</string>
+    <string name="question3">If an object is not moving, no forces are acting upon it</string>
+    <string name="question4">Galileo Galilei was the first to notice that objects fall at the same rate</string>
+    <string name="question5">The coulomb (C) is a unit of electrical charge</string>
+    <string name="question6">The ohm is a unit of electrical voltage</string>
+
+    <string name="prev">PREV</string>
+    <string name="next">NEXT</string>
+    <string name="trueBtnString">TRUE</string>
+    <string name="falseBtnString">FALSE</string>
+    <string name="cheat">CHEAT</string>
+    <string name="show_correct_answer">SHOW CORRECT ANSWER</string>
+</resources>
