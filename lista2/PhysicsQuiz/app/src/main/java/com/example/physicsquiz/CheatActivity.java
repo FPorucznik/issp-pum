@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ public class CheatActivity extends AppCompatActivity {
     private String answer;
     private TextView answerText;
     private Button showAnswerBtn;
+    public static int cheatedQuestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,7 @@ public class CheatActivity extends AppCompatActivity {
         if(savedInstanceState != null) {
             answerText.setText(savedInstanceState.getString("answerText_state"));
             showAnswerBtn.setVisibility(savedInstanceState.getInt("showAnswerBtnVisibility"));
-            MainActivity.cheatedQuestions = savedInstanceState.getInt("cheatedQuestionsCheatActivity_state");
+            cheatedQuestions = savedInstanceState.getInt("cheatedQuestionsCheatActivity_state");
         }
     }
 
@@ -38,12 +40,12 @@ public class CheatActivity extends AppCompatActivity {
 
         outState.putString("answerText_state", answerText.getText().toString());
         outState.putInt("showAnswerBtnVisibility", showAnswerBtn.getVisibility());
-        outState.putInt("cheatedQuestionsCheatActivity_state", MainActivity.cheatedQuestions);
+        outState.putInt("cheatedQuestionsCheatActivity_state", cheatedQuestions);
     }
 
     public void showAnswer(View view) {
         answerText.setText(answer);
-        MainActivity.cheatedQuestions++;
+        cheatedQuestions++;
         showAnswerBtn.setVisibility(Button.GONE);
     }
 

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private int currentQuestion;
     private int answeredQuestions;
     private int score;
-    public static int cheatedQuestions;
 
     private final Question[] questions = new Question[]{
             new Question(R.string.question1, true),
@@ -76,14 +76,12 @@ public class MainActivity extends AppCompatActivity {
         currentQuestion = 0;
         answeredQuestions = 0;
         score = 0;
-        cheatedQuestions = 0;
 
         if(savedInstanceState != null) {
             questionText.setText(savedInstanceState.getString("questionText_state"));
             currentQuestion = savedInstanceState.getInt("currentQuestion_state");
             answeredQuestions = savedInstanceState.getInt("answeredQuestions_state");
             score = savedInstanceState.getInt("score_state");
-            cheatedQuestions = savedInstanceState.getInt("cheatedQuestions_state");
 
             answers = (Boolean[]) savedInstanceState.getSerializable("answers_state");
 
@@ -114,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("currentQuestion_state", currentQuestion);
         outState.putInt("answeredQuestions_state", answeredQuestions);
         outState.putInt("score_state", score);
-        outState.putInt("cheatedQuestions_state", cheatedQuestions);
         outState.putString("questionText_state", questionText.getText().toString());
         outState.putSerializable("answers_state", answers);
 
@@ -135,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("incorrectTextVisibility_state", incorrectText.getVisibility());
         outState.putInt("cheatedTextVisibility_state", cheatedText.getVisibility());
         outState.putInt("scoreTextVisibility_state", scoreText.getVisibility());
-
     }
 
     public void nextQuestion(View view) {
@@ -196,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         if(answeredQuestions == 6){
             double result;
             double scoreDouble = score;
-            double minusPercent = cheatedQuestions;
+            double minusPercent = CheatActivity.cheatedQuestions;
             minusPercent *= 15;
 
             if(minusPercent > 100 || (((scoreDouble/6)*100) - minusPercent) < 0){
@@ -211,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             questionText.setText("Quiz Summary");
             correctText.setText("Correct answers: " + score);
             incorrectText.setText("Incorrect answers: " + (6-score));
-            cheatedText.setText("Answers cheated: " + cheatedQuestions);
+            cheatedText.setText("Answers cheated: " + CheatActivity.cheatedQuestions);
             scoreText.setText("Score: " + df.format(result) + "%");
         }
     }
@@ -249,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
         score = 0;
         answeredQuestions = 0;
         currentQuestion = 0;
-        cheatedQuestions = 0;
+        CheatActivity.cheatedQuestions = 0;
         questionText.setText(questions[0].getTextId());
         Arrays.fill(answers, null);
     }
