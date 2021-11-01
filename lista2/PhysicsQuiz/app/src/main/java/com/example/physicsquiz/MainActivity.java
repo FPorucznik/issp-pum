@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnCheat;
     private Button btnReset;
     private Button btnShow;
+    private Button btnBrowse;
 
     private int currentQuestion;
     private int answeredQuestions;
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         btnCheat = findViewById(R.id.btnCheat);
         btnReset = findViewById(R.id.btnReset);
         btnShow = findViewById(R.id.btnShow);
+        btnBrowse = findViewById(R.id.btnBrowse);
 
         currentQuestion = 0;
         answeredQuestions = 0;
@@ -219,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
             btnPrev.setVisibility(Button.VISIBLE);
             btnNext.setVisibility(Button.VISIBLE);
             btnCheat.setVisibility(Button.VISIBLE);
+            btnBrowse.setVisibility(Button.VISIBLE);
             correctText.setVisibility(TextView.GONE);
             incorrectText.setVisibility(TextView.GONE);
             cheatedText.setVisibility(TextView.GONE);
@@ -232,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
             btnNext.setVisibility(Button.GONE);
             btnCheat.setVisibility(Button.GONE);
             btnShow.setVisibility(Button.GONE);
+            btnBrowse.setVisibility(Button.GONE);
             correctText.setVisibility(TextView.VISIBLE);
             incorrectText.setVisibility(TextView.VISIBLE);
             cheatedText.setVisibility(TextView.VISIBLE);
@@ -263,5 +267,9 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 (dialog, which) -> dialog.dismiss());
         alertDialog.show();
+    }
+
+    public void browseAnswer(View view) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com/search?q=" + questionText.getText().toString())));
     }
 }

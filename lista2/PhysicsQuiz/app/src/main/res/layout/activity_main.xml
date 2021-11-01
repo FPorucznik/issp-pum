@@ -9,6 +9,15 @@
     android:gravity="center"
     >
 
+    <Button
+        android:id="@+id/btnBrowse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="BROWSE"
+        android:onClick="browseAnswer">
+
+    </Button>
 
     <TextView
         android:id="@+id/questionText"
