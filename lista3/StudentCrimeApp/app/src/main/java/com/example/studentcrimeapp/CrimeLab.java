@@ -1,8 +1,12 @@
 package com.example.studentcrimeapp;
 
 import android.content.Context;
+import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,9 +24,13 @@ public class CrimeLab {
 
     private CrimeLab(Context context){
         mCrimes = new ArrayList<>();
-        for(int i = 0; i < 3; i++){
+        Date date = new Date();
+
+        for(int i = 0; i < 50; i++){
             Crime crime = new Crime();
+            crime.setId(UUID.randomUUID());
             crime.setTitle("Crime #" + i);
+            crime.setDate(date);
             crime.setSolved(i % 2 == 0);
             mCrimes.add(crime);
         }
@@ -39,5 +47,13 @@ public class CrimeLab {
             }
         }
         return null;
+    }
+
+    public void removeCrime(Crime crime){
+        mCrimes.remove(crime);
+    }
+
+    public void addCrime(Crime crime){
+        mCrimes.add(crime);
     }
 }

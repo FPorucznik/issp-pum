@@ -10,8 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentCrimeApp">
         <activity
+            android:name=".CrimeActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Crime Activity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
