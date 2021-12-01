@@ -56,4 +56,6 @@ public class CrimeLab {
     public void addCrime(Crime crime){
         mCrimes.add(crime);
     }
+
+    public void updateCrime(int position, Crime crime){ mCrimes.set(position, crime); }
 }

@@ -37,11 +37,11 @@ public class CrimeActivity extends AppCompatActivity {
     private Crime current;
     private DateFormat df = new SimpleDateFormat("E MMM dd HH:mm:ss zzz yyyy");
     private Date editedDate;
-    private String dateString;
     private int mMonth;
     private int mYear;
     private int mDay;
     final Calendar c = Calendar.getInstance();
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,7 @@ public class CrimeActivity extends AppCompatActivity {
 
         crimeId = UUID.fromString(getIntent().getStringExtra("id"));
         current = CrimeLab.get(this).getCrime(crimeId);
+        index = CrimeLab.get(this).getCrimes().indexOf(current);
         editText.setText(current.getTitle());
         dateButton.setText(df.format(current.getDate()));
         solvedCheckBox.setChecked(current.getSolved());
@@ -69,6 +70,7 @@ public class CrimeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 current.setTitle(editText.getText().toString());
+                CrimeLab.get(CrimeActivity.this).updateCrime(index, current);
             }
         });
 
@@ -76,6 +78,7 @@ public class CrimeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 current.setSolved(solvedCheckBox.isChecked());
+                CrimeLab.get(CrimeActivity.this).updateCrime(index, current);
             }
         });
 
@@ -107,6 +110,7 @@ public class CrimeActivity extends AppCompatActivity {
                 editedDate = c.getTime();
                 dateButton.setText(df.format(editedDate));
                 current.setDate(editedDate);
+                CrimeLab.get(CrimeActivity.this).updateCrime(index, current);
             }
             }, mHour, mMinute, true);
         timePickerDialog.show();
