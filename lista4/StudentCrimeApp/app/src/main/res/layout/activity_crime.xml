@@ -59,5 +59,29 @@
         android:text="Solved">
 
     </CheckBox>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
 
+        <Button
+            android:id="@+id/firstButton"
+            android:onClick="firstCrime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="FIRST CRIME"
+            android:layout_marginRight="6dp">
+        </Button>
+        <Button
+            android:id="@+id/lastButton"
+            android:onClick="lastCrime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LAST CRIME"
+            android:layout_weight="1"
+            android:layout_marginLeft="6dp">
+        </Button>
+    </LinearLayout>
 </LinearLayout>

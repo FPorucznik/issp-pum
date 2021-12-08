@@ -60,7 +60,6 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.Crim
         }
     }
 
-
     @NonNull
     @Override
     public CrimeListAdapter.CrimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -86,5 +85,4 @@ public class CrimeListAdapter extends RecyclerView.Adapter<CrimeListAdapter.Crim
     public int getItemCount() {
         return crimes.size();
     }
-
 }
