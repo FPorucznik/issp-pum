@@ -70,7 +70,7 @@ public class CrimeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 current.setTitle(editText.getText().toString());
-                CrimeLab.get(CrimeActivity.this).updateCrime(index, current);
+                MainActivity.crimeToUpdate = current;
             }
         });
 
@@ -78,7 +78,7 @@ public class CrimeActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 current.setSolved(solvedCheckBox.isChecked());
-                CrimeLab.get(CrimeActivity.this).updateCrime(index, current);
+                MainActivity.crimeToUpdate = current;
             }
         });
 
@@ -110,15 +110,14 @@ public class CrimeActivity extends AppCompatActivity {
                 editedDate = c.getTime();
                 dateButton.setText(df.format(editedDate));
                 current.setDate(editedDate);
-                CrimeLab.get(CrimeActivity.this).updateCrime(index, current);
+                MainActivity.crimeToUpdate = current;
             }
             }, mHour, mMinute, true);
         timePickerDialog.show();
     }
 
     public void removeCrime(View view) {
-        CrimeLab.get(this).removeCrime(current);
-        MainActivity.crimeListAdapter.notifyDataSetChanged();
+        MainActivity.dbHandler.deleteCrime(current);
         finish();
     }
 }
