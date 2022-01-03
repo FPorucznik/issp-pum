@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 crime.setTitle("Crime #" + crimeList.size());
                 crime.setDate(date);
                 crime.setSolved(false);
+                crime.setPicture("");
                 dbHandler.addCrime(crime);
                 getCrimes(1);
                 crimeListAdapter.notifyDataSetChanged();
@@ -121,12 +122,14 @@ public class MainActivity extends AppCompatActivity {
                 String title = cursor.getString(2);
                 Date date = new Date(cursor.getString(3));
                 Boolean solved = cursor.getInt(4) > 0;
+                String picture = cursor.getString(5);
 
                 Crime crime = new Crime();
                 crime.setId(id);
                 crime.setTitle(title);
                 crime.setDate(date);
                 crime.setSolved(solved);
+                crime.setPicture(picture);
 
                 crimeList.add(crime);
             }

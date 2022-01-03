@@ -11,6 +11,7 @@ public class Crime {
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
+    private String picture;
 
     public void setTitle(String title) {
         this.mTitle = title;
@@ -33,4 +34,8 @@ public class Crime {
     public Date getDate() { return mDate; }
 
     public void setDate(Date date){ this.mDate = date; }
+
+    public String getPicture() { return picture; }
+
+    public void setPicture(String picture) { this.picture = picture; }
 }

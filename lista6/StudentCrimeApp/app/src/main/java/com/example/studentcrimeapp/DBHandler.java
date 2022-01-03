@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class DBHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "crimesDB_JAVA.db";
     public static final String TABLE_CRIMES = "crimes";
 
@@ -19,6 +19,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_SOLVED = "solved";
+    public static final String COLUMN_IMAGE = "image";
 
     public DBHandler(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -31,7 +32,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_CRIME_ID + " TEXT," +
                 COLUMN_TITLE + " TEXT," +
                 COLUMN_DATE + " TEXT," +
-                COLUMN_SOLVED + " BOOLEAN" + ")";
+                COLUMN_SOLVED + " BOOLEAN," +
+                COLUMN_IMAGE + " TEXT" + ")";
 
         db.execSQL(CREATE_CRIMES_TABLE);
     }
@@ -54,6 +56,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_TITLE, crime.getTitle());
         values.put(COLUMN_DATE, crime.getDate().toString());
         values.put(COLUMN_SOLVED, crime.getSolved());
+        values.put(COLUMN_IMAGE, crime.getPicture());
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_CRIMES, null, values);
@@ -76,6 +79,16 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(COLUMN_TITLE, title);
         values.put(COLUMN_DATE, date.toString());
         values.put(COLUMN_SOLVED, solved);
+
+        db.update(TABLE_CRIMES, values, COLUMN_CRIME_ID + " = ?", new String[]{String.valueOf(id.toString())});
+        db.close();
+    }
+
+    public void updateCrimeImage(UUID id, String image){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_IMAGE, image);
 
         db.update(TABLE_CRIMES, values, COLUMN_CRIME_ID + " = ?", new String[]{String.valueOf(id.toString())});
         db.close();
