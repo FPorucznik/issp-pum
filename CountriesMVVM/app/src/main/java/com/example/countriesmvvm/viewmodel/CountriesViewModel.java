@@ -8,6 +8,8 @@ import com.example.countriesmvvm.model.CountriesService;
 import com.example.countriesmvvm.model.Country;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -18,7 +20,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CountriesViewModel extends ViewModel {
 
-    private final MutableLiveData<List<String>> countries = new MutableLiveData<>();
+    //private final MutableLiveData<List<String>> countries = new MutableLiveData<>();
+    private final MutableLiveData<LinkedHashMap<String, String>> countries = new MutableLiveData<>();
     private final MutableLiveData<Boolean> countryError = new MutableLiveData<>();
 
     private CountriesService service;
@@ -37,12 +40,16 @@ public class CountriesViewModel extends ViewModel {
                     @Override
                     public void onSuccess(@NonNull List<Country> values) {
                         //add country capital next update
-                        List<String> countryNames = new ArrayList<>();
+                        //List<String> countryNames = new ArrayList<>();
+                        LinkedHashMap<String,String> fullCountries = new LinkedHashMap<>();
                         for(Country country : values){
-                            countryNames.add(country.countryName);
+                            //countryNames.add(country.countryName);
+
+                            fullCountries.put(country.countryName, country.countryCapital);
                         }
 
-                        countries.setValue(countryNames);
+                        //countries.setValue(countryNames);
+                        countries.setValue(fullCountries);
                         countryError.setValue(false);
                     }
 
@@ -53,7 +60,7 @@ public class CountriesViewModel extends ViewModel {
                 });
     }
 
-    public LiveData<List<String>> getCountries(){
+    public LiveData<LinkedHashMap<String, String>> getCountries(){
         return countries;
     }
 

@@ -6,4 +6,7 @@ public class Country {
 
     @SerializedName("name")
     public String countryName;
+
+    @SerializedName("capital")
+    public String countryCapital;
 }

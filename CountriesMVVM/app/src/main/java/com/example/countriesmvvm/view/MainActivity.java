@@ -18,11 +18,15 @@ import com.example.countriesmvvm.R;
 import com.example.countriesmvvm.viewmodel.CountriesViewModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> listCountries = new ArrayList<>();
+    private LinkedHashMap<String, String> listCountries = new LinkedHashMap<>();
+
+    private List<String> keys;
 
     private RecyclerView recyclerView;
     private CountriesAdapter adapter;
@@ -48,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getCountries().observe(this, countries -> {
             if(listCountries != null){
                 listCountries.clear();
-                listCountries.addAll(countries);
+                listCountries.putAll(countries);
+                keys = new ArrayList<>(listCountries.keySet());
                 adapter.notifyDataSetChanged();
             }
         });
@@ -58,12 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "failed to connect", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    public void setValues(List<String> values){
-        listCountries.clear();
-        listCountries.addAll(values);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -98,11 +97,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            String element = listCountries.get(position);
-            TextView name = holder.itemView.findViewById(R.id.countryName);
-            TextView capital = holder.itemView.findViewById(R.id.countryCapital);
-            name.setText(element);
-            capital.setText("tbd");
+            String name = keys.get(position);
+            String capital = listCountries.get(name);
+
+            TextView nameView = holder.itemView.findViewById(R.id.countryName);
+            TextView capitalView = holder.itemView.findViewById(R.id.countryCapital);
+            nameView.setText(name);
+            capitalView.setText(capital);
         }
 
         @Override
