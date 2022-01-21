@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         observeViewModel();
-
     }
 
     private void observeViewModel(){
@@ -101,12 +100,14 @@ public class MainActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             String element = listCountries.get(position);
             TextView name = holder.itemView.findViewById(R.id.countryName);
+            TextView capital = holder.itemView.findViewById(R.id.countryCapital);
             name.setText(element);
+            capital.setText("tbd");
         }
 
         @Override
         public int getItemCount() {
-            return 0;
+            return listCountries.size();
         }
     }
 }
