@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +14,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.countriesmvvm.R;
+import com.example.countriesmvvm.model.Country;
 import com.example.countriesmvvm.viewmodel.CountriesViewModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LinkedHashMap<String, String> listCountries = new LinkedHashMap<>();
-
-    private List<String> keys;
+    private List<Country> listCountries = new ArrayList<>();
 
     private RecyclerView recyclerView;
     private CountriesAdapter adapter;
@@ -39,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewModel = new ViewModelProvider(this).get(CountriesViewModel.class);
+        viewModel.initRepo(this.getApplication());
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -52,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         viewModel.getCountries().observe(this, countries -> {
             if(listCountries != null){
                 listCountries.clear();
-                listCountries.putAll(countries);
-                keys = new ArrayList<>(listCountries.keySet());
+                listCountries.addAll(countries);
                 adapter.notifyDataSetChanged();
             }
         });
@@ -97,13 +93,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-            String name = keys.get(position);
-            String capital = listCountries.get(name);
+            Country country = listCountries.get(position);
 
             TextView nameView = holder.itemView.findViewById(R.id.countryName);
             TextView capitalView = holder.itemView.findViewById(R.id.countryCapital);
-            nameView.setText(name);
-            capitalView.setText(capital);
+            nameView.setText(country.countryName);
+            capitalView.setText(country.countryCapital);
         }
 
         @Override

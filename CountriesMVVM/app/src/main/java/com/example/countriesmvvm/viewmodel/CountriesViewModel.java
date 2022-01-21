@@ -1,11 +1,17 @@
 package com.example.countriesmvvm.viewmodel;
 
+import android.app.Application;
+import android.content.Context;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.countriesmvvm.model.CountriesService;
 import com.example.countriesmvvm.model.Country;
+import com.example.countriesmvvm.repository.CountryRepository;
+import com.example.countriesmvvm.view.MainActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,55 +26,27 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CountriesViewModel extends ViewModel {
 
-    //private final MutableLiveData<List<String>> countries = new MutableLiveData<>();
-    private final MutableLiveData<LinkedHashMap<String, String>> countries = new MutableLiveData<>();
-    private final MutableLiveData<Boolean> countryError = new MutableLiveData<>();
-
-    private CountriesService service;
-    private Disposable disposable;
+    private CountryRepository repository;
+    private LiveData<List<Country>> countries;
 
     public CountriesViewModel(){
-        service = new CountriesService();
-        fetchData();
+        countries = null;
     }
 
-    private void fetchData() {
-        disposable = service.getCountries()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableSingleObserver<List<Country>>() {
-                    @Override
-                    public void onSuccess(@NonNull List<Country> values) {
-                        //add country capital next update
-                        //List<String> countryNames = new ArrayList<>();
-                        LinkedHashMap<String,String> fullCountries = new LinkedHashMap<>();
-                        for(Country country : values){
-                            //countryNames.add(country.countryName);
-
-                            fullCountries.put(country.countryName, country.countryCapital);
-                        }
-
-                        //countries.setValue(countryNames);
-                        countries.setValue(fullCountries);
-                        countryError.setValue(false);
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        countryError.setValue(true);
-                    }
-                });
+    public void initRepo(Application application){
+        repository = new CountryRepository(application);
+        countries = repository.getAllCountries();
     }
 
-    public LiveData<LinkedHashMap<String, String>> getCountries(){
+    public LiveData<List<Country>> getCountries(){
         return countries;
     }
 
     public LiveData<Boolean> getCountryError(){
-        return countryError;
+        return repository.getCountryError();
     }
 
     public void onDispose(){
-        disposable.dispose();
+        repository.onDispose();
     }
 }
